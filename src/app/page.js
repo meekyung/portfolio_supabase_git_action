@@ -2,19 +2,6 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 
-// 정적 export에서는 빌드 시점에 모든 [id] 경로를 알아야 하므로 필수
-export async function generateStaticParams() {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("portfolio")
-    .select("id");
-
-  if (error) {
-    throw new Error(`generateStaticParams failed: ${error.message}`);
-  }
-  return (data ?? []).map((row) => ({ id: String(row.id) }));
-}
-
 export default async function Home() {
   const supabase = createClient();
   const { data: projects } = await supabase.from("portfolio").select().limit(3).order('id', { ascending: false });
