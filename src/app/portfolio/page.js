@@ -3,7 +3,12 @@ import Image from "next/image";
 
 export default async function Portfolio() {
   const supabase = createClient();
-  const { data: projects } = await supabase.from("portfolio").select().order('id', { ascending: false });
+
+  const { data: projects } = await supabase
+    .from("portfolio")
+    .select()
+    .order('id', { ascending: false })
+    .range(6, 10);
   console.log(projects);
 
   const getPublicURL = (path)=>{
